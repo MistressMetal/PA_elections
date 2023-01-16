@@ -105,13 +105,16 @@ app.layout = dbc.Container(row, fluid=True)
 @app.callback(Output('party_id', 'options'),
               Input('office_id', 'value'))
 def update_available_parties(office_id):
-    available_parties_current=df.loc[df.Office==office_id]["Party"].unique()
+    available_parties_current=list(df.loc[df.Office==office_id]["Party"].unique())
+    if ('All' in available_parties_current):  available_parties_current.remove('All')
+
     return [{'label': i, 'value': i} for i in available_parties_current]
 
 @app.callback(Output('party_id2', 'options'),
               Input('office_id2', 'value'))
 def update_available_parties(office_id2):
-    available_parties_current=df.loc[df.Office==office_id2]["Party"].unique()
+    available_parties_current=list(df.loc[df.Office==office_id2]["Party"].unique())
+    if ('All' in available_parties_current):  available_parties_current.remove('All')
     return [{'label': i, 'value': i} for i in available_parties_current]
 
 ### Update the Year options after selecting an office on the left.
